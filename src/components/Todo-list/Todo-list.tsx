@@ -1,6 +1,9 @@
 import { FC } from "react";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import AddIcon from "@mui/icons-material/Add";
 
 import "./style.css";
 
@@ -10,17 +13,23 @@ export const Todolist: FC = () => {
 
   let [todoArray, setTodoArray] = useState<object[]>([]);
   let [inputValue, setInputValue] = useState<string>("");
+  let [isAlerted, setIsAlerted] = useState<boolean>(false);
 
   const addTodo = (todo: string) => {
-    const newTodo = {
-      id: uuidv4(),
-      todo: todo,
-    };
+    if (todo.trim() !== "") {
+      const newTodo = {
+        id: uuidv4(),
+        todo: todo,
+      };
 
-    setTodoArray([...todoArray, newTodo]);
-
-    setInputValue("");
+      setTodoArray([...todoArray, newTodo]);
+      setInputValue("");
+      setIsAlerted(false);
+    } else {
+      setIsAlerted(true);
+    }
   };
+
   const startEditing = (id: number) => {
     const todoToEdit = todoArray.find((todo: any) => todo.id === id);
     if (todoToEdit) {
@@ -48,15 +57,28 @@ export const Todolist: FC = () => {
 
   return (
     <div className="mainDiv">
-      <h3>TodoList</h3>
+      <div className="headerWrapper">
+        <h3>TodoList</h3>
 
-      <input
-        type="text"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-      />
+        <input
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+        />
 
-      <button onClick={() => addTodo(inputValue)}>Add</button>
+        <button onClick={() => addTodo(inputValue)} className="addButton">
+          <AddIcon />{" "}
+        </button>
+        <p
+          style={{
+            color: "red",
+            fontWeight: "600",
+            display: isAlerted ? "block" : "none",
+          }}
+        >
+          Todo field can't be empty
+        </p>
+      </div>
       <ul>
         {todoArray.map((todo: any) => (
           <li key={todo.id}>
@@ -67,13 +89,30 @@ export const Todolist: FC = () => {
                   value={editedTodoText}
                   onChange={(e) => setEditedTodoText(e.target.value)}
                 />
-                <button onClick={() => saveEditedTodo(todo.id)}>Save</button>
+                <button
+                  onClick={() => saveEditedTodo(todo.id)}
+                  className="saveButton"
+                >
+                  Save
+                </button>
               </>
             ) : (
               <>
                 {todo.todo}
-                <button onClick={() => delTodo(todo.id)}>&times;</button>
-                <button onClick={() => startEditing(todo.id)}>Edit</button>
+                <div className="buttonDiv">
+                  <button
+                    onClick={() => delTodo(todo.id)}
+                    className="addEditButton"
+                  >
+                    <DeleteIcon />{" "}
+                  </button>
+                  <button
+                    onClick={() => startEditing(todo.id)}
+                    className="addEditButton"
+                  >
+                    <EditIcon />{" "}
+                  </button>
+                </div>
               </>
             )}
           </li>
