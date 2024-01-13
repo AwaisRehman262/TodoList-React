@@ -13,7 +13,7 @@ export const Todolist: FC = () => {
     todo: string;
   }
 
-  const [editingTodoId, setEditingTodoId] = useState<number | null>(null);
+  const [editingTodoId, setEditingTodoId] = useState<string | null>(null);
   const [editedTodoText, setEditedTodoText] = useState<string>("");
 
   let [todoArray, setTodoArray] = useState<Todo[]>([]);
@@ -22,7 +22,7 @@ export const Todolist: FC = () => {
 
   const addTodo = (todo: string) => {
     if (todo.trim() !== "") {
-      const newTodo = {
+      const newTodo: Todo = {
         id: uuidv4(),
         todo: todo,
       };
@@ -35,15 +35,15 @@ export const Todolist: FC = () => {
     }
   };
 
-  const startEditing = (id: number) => {
-    const todoToEdit = todoArray.find((todo: any) => todo.id === id);
+  const startEditing = (id: string) => {
+    const todoToEdit = todoArray.find((todo: Todo) => todo.id === id);
     if (todoToEdit) {
       setEditingTodoId(id);
       setEditedTodoText(todoToEdit.todo);
     }
   };
-  const saveEditedTodo = (id: number) => {
-    const updatedTodoArray = todoArray.map((todo: any) =>
+  const saveEditedTodo = (id: string) => {
+    const updatedTodoArray = todoArray.map((todo: Todo) =>
       todo.id === id ? { ...todo, todo: editedTodoText } : todo
     );
 
@@ -52,8 +52,8 @@ export const Todolist: FC = () => {
     setEditedTodoText("");
   };
 
-  const delTodo = (id: number) => {
-    const newtodoArray = todoArray.filter((todo: object) => {
+  const delTodo = (id: string) => {
+    const newtodoArray = todoArray.filter((todo: Todo) => {
       return todo.id !== id;
     });
 
