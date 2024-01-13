@@ -17,7 +17,6 @@ body {
     overflow-y: auto;
     max-height: calc(80vh - 8vh);
     position: relative;
-    /* Added position relative */
 }
 
 .headerWrapper {
@@ -31,7 +30,7 @@ body {
     z-index: 1;
 }
 
-.mainDiv h3 {
+.headerWrapper h3 {
     background: linear-gradient(45deg, #2196F3, #4CAF50);
     padding: 15px;
     border-top-left-radius: 10px;
@@ -40,11 +39,12 @@ body {
     font-size: 24px;
 }
 
-.mainDiv input {
+.headerWrapper input {
     width: 70%;
     height: 33px;
     border-radius: 10px 0 0 10px;
     vertical-align: middle;
+    margin-bottom: 5vh;
 }
 
 .addButton {
@@ -56,6 +56,7 @@ body {
     cursor: pointer;
     border: none;
     padding: 0 15px;
+    margin-bottom: 5vh;
 }
 
 .addButton:hover {
@@ -67,17 +68,14 @@ body {
     padding: 0;
     margin: 0;
     overflow-y: auto;
-    /* Add scrollbar if needed */
 }
 
 .mainDiv ul::-webkit-scrollbar {
-    width: 12px;
-    /* Width of the entire scrollbar */
+    width: 6px;
 }
 
 .mainDiv ul::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.2);
-    /* Track color */
+    background: rgba(121, 22, 22, 0.2);
 }
 
 .mainDiv ul::-webkit-scrollbar-thumb {

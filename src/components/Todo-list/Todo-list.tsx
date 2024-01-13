@@ -1,5 +1,4 @@
-import { FC } from "react";
-import { useState } from "react";
+import React, { FC, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -7,18 +6,21 @@ import AddIcon from "@mui/icons-material/Add";
 
 import "./style.css";
 
-export const Todolist: FC = () => {
-  interface Todo {
-    id: string;
-    todo: string;
-  }
+interface Todo {
+  id: string;
+  todo: string;
+}
 
+interface TodolistProps {
+  // You can define props here if needed in the future
+}
+
+const Todolist: FC<TodolistProps> = () => {
   const [editingTodoId, setEditingTodoId] = useState<string | null>(null);
   const [editedTodoText, setEditedTodoText] = useState<string>("");
-
-  let [todoArray, setTodoArray] = useState<Todo[]>([]);
-  let [inputValue, setInputValue] = useState<string>("");
-  let [isAlerted, setIsAlerted] = useState<boolean>(false);
+  const [todoArray, setTodoArray] = useState<Todo[]>([]);
+  const [inputValue, setInputValue] = useState<string>("");
+  const [isAlerted, setIsAlerted] = useState<boolean>(false);
 
   const addTodo = (todo: string) => {
     if (todo.trim() !== "") {
@@ -42,6 +44,7 @@ export const Todolist: FC = () => {
       setEditedTodoText(todoToEdit.todo);
     }
   };
+
   const saveEditedTodo = (id: string) => {
     const updatedTodoArray = todoArray.map((todo: Todo) =>
       todo.id === id ? { ...todo, todo: editedTodoText } : todo
@@ -53,9 +56,7 @@ export const Todolist: FC = () => {
   };
 
   const delTodo = (id: string) => {
-    const newtodoArray = todoArray.filter((todo: Todo) => {
-      return todo.id !== id;
-    });
+    const newtodoArray = todoArray.filter((todo: Todo) => todo.id !== id);
 
     setTodoArray(newtodoArray);
   };
@@ -64,6 +65,15 @@ export const Todolist: FC = () => {
     <div className="mainDiv">
       <div className="headerWrapper">
         <h3>TodoList</h3>
+        <p
+          style={{
+            color: "red",
+            fontWeight: "600",
+            display: isAlerted ? "block" : "none",
+          }}
+        >
+          Todo field can't be empty
+        </p>
 
         <input
           type="text"
@@ -74,18 +84,9 @@ export const Todolist: FC = () => {
         <button onClick={() => addTodo(inputValue)} className="addButton">
           <AddIcon />{" "}
         </button>
-        <p
-          style={{
-            color: "red",
-            fontWeight: "600",
-            display: isAlerted ? "block" : "none",
-          }}
-        >
-          Todo field can't be empty
-        </p>
       </div>
       <ul>
-        {todoArray.map((todo: any) => (
+        {todoArray.map((todo: Todo) => (
           <li key={todo.id}>
             {editingTodoId === todo.id ? (
               <>
@@ -126,3 +127,5 @@ export const Todolist: FC = () => {
     </div>
   );
 };
+
+export default Todolist;
