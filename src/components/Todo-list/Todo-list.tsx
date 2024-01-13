@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -11,11 +11,7 @@ interface Todo {
   todo: string;
 }
 
-interface TodolistProps {
-  // You can define props here if needed in the future
-}
-
-const Todolist: FC<TodolistProps> = () => {
+export const Todolist: FC = () => {
   const [editingTodoId, setEditingTodoId] = useState<string | null>(null);
   const [editedTodoText, setEditedTodoText] = useState<string>("");
   const [todoArray, setTodoArray] = useState<Todo[]>([]);
@@ -127,5 +123,3 @@ const Todolist: FC<TodolistProps> = () => {
     </div>
   );
 };
-
-export default Todolist;
