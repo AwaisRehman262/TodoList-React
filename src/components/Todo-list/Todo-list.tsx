@@ -8,10 +8,15 @@ import AddIcon from "@mui/icons-material/Add";
 import "./style.css";
 
 export const Todolist: FC = () => {
+  interface Todo {
+    id: string;
+    todo: string;
+  }
+
   const [editingTodoId, setEditingTodoId] = useState<number | null>(null);
   const [editedTodoText, setEditedTodoText] = useState<string>("");
 
-  let [todoArray, setTodoArray] = useState<object[]>([]);
+  let [todoArray, setTodoArray] = useState<Todo[]>([]);
   let [inputValue, setInputValue] = useState<string>("");
   let [isAlerted, setIsAlerted] = useState<boolean>(false);
 
